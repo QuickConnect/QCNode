@@ -1,0 +1,24 @@
+{
+    "author": "Joshua Barney <joshmbarney@icloud.com",
+    "homepage": "TODO",
+    "name": "qcnode",
+    "description": "The QuickConnect Framework for Node.js",
+    "version": "1.0.0",
+    "private": true,
+    "dependencies": {},
+    "devDependencies": {},
+    "scripts": {},
+    "main": "./QuickConnectNode.js",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/JoshRagem/QCNode.git"
+    },
+    "keywords": [
+        "stack",
+        "quickconnect",
+        "rapid"
+    ],
+    "engines": {
+        "node": ">=0.8"
+    }
+}
