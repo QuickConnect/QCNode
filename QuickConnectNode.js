@@ -32,14 +32,14 @@ var groupMap = mappings.groupMap
 	Source optimized, modified, and expanded by Lee Barney after donation to QuickConnectFamily.org
  */
 
-qc = new Object()
+qc = exports
 
 qc.WAIT_FOR_DATA = 'wAiT'
 qc.STACK_EXIT = 'ExIt_StAcK'
 qc.STACK_CONTINUE = true
-exports.WAIT_FOR_DATA = qc.WAIT_FOR_DATA
-exports.STACK_EXIT = qc.STACK_EXIT
-exports.STACK_CONTINUE = qc.STACK_CONTINUE
+//exports.WAIT_FOR_DATA = qc.WAIT_FOR_DATA
+//exports.STACK_EXIT = qc.STACK_EXIT
+//exports.STACK_CONTINUE = qc.STACK_CONTINUE
 
 qc.executionMap = new Object()
 
@@ -82,7 +82,7 @@ function testImmediate(){
                        setImmediate(fn)
                }
        }
-exports.nextTick = qc.nextTick
+//exports.nextTick = qc.nextTick
 }
 testImmediate();
 
@@ -129,7 +129,7 @@ qc.handleBatchRequest = function(commandParameterPairsArray){
 			}
 		}
 }
-exports.handleBatchRequest = qc.handleBatchRequest
+//exports.handleBatchRequest = qc.handleBatchRequest
 
 qc.handleRequest = function(aCommandArray, requestData
                     , allStacksCompleteCallback, runParallel) {
@@ -183,7 +183,7 @@ qc.handleRequest = function(aCommandArray, requestData
                     , allStacksCompleteCallback, aCommandArray)
   }
 }
-exports.handleRequest = qc.handleRequest
+//exports.handleRequest = qc.handleRequest
 
 
 function cloneConsumableStacks(aCommandArray, uuid){
@@ -319,7 +319,7 @@ qc.handleError = function(aCmd, errorParameters) {
   dispatchToECF(aCmd, errorParameters, uuid
                 , ECFCallbackFunctionGenerator(aCmd, errorParameters, uuid))
 }
-exports.handleError = qc.handleError
+//exports.handleError = qc.handleError
 
 qc.cleanStack = function(uuid) {
   //debug('cleaning the stack')
@@ -547,7 +547,7 @@ function asyncStackContinue(uuid, resultKey, results, commandArray
 }
 qc.asyncStackContinue = asyncStackContinue
 
-exports.asyncStackContinue = qc.asyncStackContinue
+//exports.asyncStackContinue = qc.asyncStackContinue
 
 function asyncStackExit(uuid, resultKey, results, allStacksCompleteCallback){
 	var hold = qc.executionMap[uuid]
@@ -560,6 +560,6 @@ function asyncStackExit(uuid, resultKey, results, allStacksCompleteCallback){
 	}
 }
 qc.asyncStackExit = asyncStackExit
-exports.asyncStackExit = qc.asyncStackExit
+//exports.asyncStackExit = qc.asyncStackExit
 
-exports.qc = qc
+//exports.qc = qc
