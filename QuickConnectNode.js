@@ -543,6 +543,8 @@ function asyncStackContinue(uuid, resultKey, results, commandArray
                     , callbackFunctionSelector(commandArray, dataAccumulator
                                     , uuid, allStacksCompleteCallback)
                     , commandArray, allStacksCompleteCallback)
+  } else if(allStacksCompleteCallback){
+    allStacksCompleteCallback(dataAccumulator)
   }
 }
 qc.asyncStackContinue = asyncStackContinue
