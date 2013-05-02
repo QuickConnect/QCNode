@@ -10,14 +10,12 @@ function QuickConnectStack(id, funcs, data, qc, cb, testing) {
 	this.id = id
 	cb?this.on('ended', cb):''
 	
-	going = false
-	
 	function go() {
-	  if (going) {
+	  if (state.going) {
 	    throw new Error("Stack is already started")
 	  }
 //		console.log('go!')
-		going = true
+		state.going = true
 		
 		self.emit('started', data)
 		dispatch()
