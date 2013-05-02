@@ -63,6 +63,7 @@ function QuickConnect(testing, debug) {
 	}
 	
 	function handleRequest(aCmd, requestData, callback/*, runBackground*/) {
+		var stack, uuid, funcs
 		uuid = genrateUUID()
 		funcs = cloneConsumableStacks(aCmd, uuid)
 		if (!funcs) {
