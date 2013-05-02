@@ -51,15 +51,15 @@ function QuickConnectStack(id, funcs, data, qc, cb, testing) {
 	}
 	
 	function dispatchToValCF(callback) {
-	  var func = ValCFs.pop()
+	  var func = ValCFs.shift()
 	  dispatchToCF("ValCF", func, callback)
 	}
 	function dispatchToDCF(callback) {
-	  var func = DCFs.pop()
+	  var func = DCFs.shift()
 	  dispatchToCF("DCF", func, callback)
 	}
 	function dispatchToVCF(callback) {
-	  var func = VCFs.pop()
+	  var func = VCFs.shift()
 	  dispatchToCF("VCF", func, callback)
 	}
 	
