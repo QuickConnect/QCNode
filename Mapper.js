@@ -10,7 +10,7 @@ function QuickConnectMapper() {
 		var funcArray = this.validationMap[aCmd]
 		if(funcArray == null) {
 			funcArray = []
-			this.dataMap[aCmd] = funcArray
+			this.validationMap[aCmd] = funcArray
 		}
 		funcArray.push(aValCF)
 	}
@@ -36,7 +36,7 @@ function QuickConnectMapper() {
 		var funcArray = this.viewMap[aCmd]
 		if(funcArray == null) {
 			funcArray = []
-			this.dataMap[aCmd] = funcArray
+			this.viewMap[aCmd] = funcArray
 		}
 		funcArray.push(aVCF)
 	}

@@ -1,7 +1,7 @@
 var Mapper = require('./Mapper'),
 	Stack = require('./Stack').Stack
 
-function QuickConnect() {
+function QuickConnect(testing, debug) {
 	var mapper, executionMap, debug
 
 	this.WAIT_FOR_DATA = 'wAiT'
@@ -11,22 +11,45 @@ function QuickConnect() {
 	mapper = new Mapper
 	this.mapper = mapper
 	
-	fakeQC = {
-		WAIT_FOR_DATA : 'wAiT',
-		STACK_EXIT : 'ExIt_StAcK',
-		STACK_CONTINUE : true,
-		handleRequest: (function (self) {
-			return function () {
-				handleRequest.apply(self, [].slice.call(arguments,0))
-			}
-		})(this),
-		handleRequests: (function (self) {
-			return function () {
-				handleRequests.apply(self, [].slice.call(arguments,0))
-			}
-		})(this),
-		debug: this.debug
-	}
+	debug = debug || console.log
+	this.debug = debug
+	
+	function blah(){
+    var immediateExists = true
+    try{
+      setImmediate(function(){})
+    } catch (e) {
+      immediateExists = false
+    }
+    this.nextTick = function (fn, prefereNextTick) {
+      if (prefereNextTick || !immediateExists) {
+        process.nextTick(fn)
+      } else {
+        setImmediate(fn)
+      }
+    }
+  }
+  blah.call(this)
+	
+	fakeQC = (function (self) {
+  	return {
+  		WAIT_FOR_DATA : 'wAiT',
+  		STACK_EXIT : 'ExIt_StAcK',
+  		STACK_CONTINUE : true,
+  		handleRequest: (function (self) {
+  			return function () {
+  				handleRequest.apply(self, [].slice.call(arguments,0))
+  			}
+  		})(self),
+  		handleRequests: (function (self) {
+  			return function () {
+  				handleRequests.apply(self, [].slice.call(arguments,0))
+  			}
+  		})(self),
+  		debug: self.debug,
+  		nextTick: self.nextTick
+  	}
+  })(this)
 	
 	executionMap = {}
 	
@@ -39,9 +62,6 @@ function QuickConnect() {
 	  return uuid
 	}
 	
-	debug = console.log
-	this.debug = debug
-	
 	function handleRequest(aCmd, requestData, callback/*, runBackground*/) {
 		uuid = genrateUUID()
 		funcs = cloneConsumableStacks(aCmd, uuid)
@@ -50,7 +70,7 @@ function QuickConnect() {
 			  + (aCmd || 'missing')+'" for which no control functions are mapped.')
 			  return
 		}
-		stack = new Stack(uuid, funcs, fakeQC, callback)
+		stack = new Stack(uuid, funcs, requestData, fakeQC, callback, testing)
 		this.nextTick(function () {
 			stack.go()
 		})
@@ -80,7 +100,7 @@ function QuickConnect() {
 				  + (aCommandArray[0] || 'missing')+'" for which no control functions are mapped.')
 				  return
 			}
-			stack = new Stack(uuid, funcs, fakeQC, callback)
+			stack = new Stack(uuid, funcs, requestData, fakeQC, callback, testing)
 			if (oldStack && !runParallel) {
 				oldStack.next = stack
 			}
@@ -117,23 +137,6 @@ function QuickConnect() {
 	  
 	  return funcs
 	}
-	
-	(function (){
-	       var immediateExists = true
-	       try{
-	               setImmediate(function(){})
-	       } catch (e) {
-	               immediateExists = false
-	       }
-	       this.nextTick = function (fn, prefereNextTick) {
-	               if (prefereNextTick || !immediateExists) {
-	                       process.nextTick(fn)
-	               } else {
-	                       setImmediate(fn)
-	               }
-	       }
-	//exports.nextTick = qc.nextTick
-	}).call(this)
 
 }
 exports.QuickConnect = QuickConnect
