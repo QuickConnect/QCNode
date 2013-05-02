@@ -3,12 +3,12 @@
     "homepage": "TODO",
     "name": "qcnode",
     "description": "The QuickConnect Framework for Node.js",
-    "version": "1.0.0",
-    "private": true,
+    "version": "2.0.0",
+    "private": false,
     "dependencies": {},
     "devDependencies": {},
     "scripts": {},
-    "main": "./QuickConnectNode.js",
+    "main": "./QuickConnect.js",
     "repository": {
         "type": "git",
         "url": "https://github.com/JoshRagem/QCNode.git"
@@ -16,7 +16,9 @@
     "keywords": [
         "stack",
         "quickconnect",
-        "rapid"
+        "rapid",
+        "async",
+        "asynchronous"
     ],
     "engines": {
         "node": ">=0.8"
