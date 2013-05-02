@@ -5,7 +5,7 @@ function QuickConnectStack(id, funcs, data, qc, cb, testing) {
 	events.EventEmitter.call(this)
 	
 	var ValCFs, DCFs, VCFs, self = this,
-	state = { going: false, cfIndex: 0, waitingCallback: null }
+	state = { going: false, cfIndex: -1, waitingCallback: null }
 	
 	this.id = id
 	cb?this.on('ended', cb):''
@@ -16,7 +16,7 @@ function QuickConnectStack(id, funcs, data, qc, cb, testing) {
 	  if (going) {
 	    throw new Error("Stack is already started")
 	  }
-		console.log('go!')
+//		console.log('go!')
 		going = true
 		
 		self.emit('started', data)
@@ -77,7 +77,7 @@ function QuickConnectStack(id, funcs, data, qc, cb, testing) {
 	
 	function dispatchToCF(type, func, callback) {
 	  var result, err, obj
-	  console.log('dispatch to cf')
+//	  console.log('dispatch to cf')
 	  
 	  state.cfIndex ++
 	  try {
