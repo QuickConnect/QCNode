@@ -111,7 +111,7 @@ function handleRequestCallbackFunctionGenerator(aCommandArray, requestParameters
   } else {
         if (allStacksCompleteCallback){
             //debug('calling External call back')
-            qc.nextTick( function(){allStacksCompleteCallback()} )
+            qc.nextTick( allStacksCompleteCallback )
         }
     return qc.doneWithRecursiveHandleRequest
   }
