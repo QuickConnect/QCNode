@@ -75,12 +75,13 @@ function QuickConnectStack(id, funcs, data, qc, cb, testing) {
 	}
 	
 	function dispatchToCF(type, func, callback) {
-	  var result, err
+	  var result, err, obj
 	  console.log('dispatch to cf')
 	  
 	  state.cfIndex ++
 	  try {
-	    result = func.call(newStackObject(), data)
+	    obj = newStackObject()
+	    result = func.call(obj, data, obj)
 	  } catch (error) {
 	    self.emit('errored', error, data, state.cfIndex)
 	    selfDestruct(true)
