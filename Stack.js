@@ -8,7 +8,7 @@ function QuickConnectStack(id, funcs, data, qc, cb, testing) {
 	state = { going: false, cfIndex: 0, waitingCallback: null }
 	
 	this.id = id
-	callback?this.on('ended', cb):''
+	cb?this.on('ended', cb):''
 	
 	going = false
 	
