@@ -70,7 +70,8 @@ function QuickConnectStack(id, funcs, data, qc, cb, testing) {
       "asyncStackError":asyncStackError,
       "WAIT_FOR_DATA":qc.WAIT_FOR_DATA,
       "STACK_CONTINUE":qc.STACK_CONTINUE,
-      "STACK_EXIT":qc.STACK_EXIT
+      "STACK_EXIT":qc.STACK_EXIT,
+      "handleRequest":qc.handleRequest
 	  }
 	}
 	
