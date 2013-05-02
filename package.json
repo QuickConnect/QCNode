@@ -1,5 +1,5 @@
 {
-    "author": "Joshua Barney <joshmbarney@icloud.com",
+    "author": "Joshua Barney <joshmbarney@icloud.com>",
     "homepage": "TODO",
     "name": "qcnode",
     "description": "The QuickConnect Framework for Node.js",
@@ -18,7 +18,8 @@
         "quickconnect",
         "rapid",
         "async",
-        "asynchronous"
+        "asynchronous",
+        "functional"
     ],
     "engines": {
         "node": ">=0.8"

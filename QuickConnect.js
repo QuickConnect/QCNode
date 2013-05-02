@@ -36,16 +36,16 @@ function QuickConnect(testing, debug) {
   		WAIT_FOR_DATA : 'wAiT',
   		STACK_EXIT : 'ExIt_StAcK',
   		STACK_CONTINUE : true,
-  		handleRequest: (function (self) {
+  		handleRequest: (function () {
   			return function () {
-  				handleRequest.apply(self, [].slice.call(arguments,0))
+  				return handleRequest.apply(self, [].slice.call(arguments,0))
   			}
-  		})(self),
-  		handleRequests: (function (self) {
+  		})(),
+  		handleRequests: (function () {
   			return function () {
-  				handleRequests.apply(self, [].slice.call(arguments,0))
+  				return handleRequests.apply(self, [].slice.call(arguments,0))
   			}
-  		})(self),
+  		})(),
   		debug: self.debug,
   		nextTick: self.nextTick
   	}

@@ -1,14 +1,14 @@
 var events = require('events')
 	util = require('util')
 
-function QuickConnectStack(id, funcs, data, qc, callback, testing) {
+function QuickConnectStack(id, funcs, data, qc, cb, testing) {
 	events.EventEmitter.call(this)
 	
 	var ValCFs, DCFs, VCFs, self = this,
 	state = { going: false, cfIndex: 0, waitingCallback: null }
 	
 	this.id = id
-	this.on('ended', callback)
+	callback?this.on('ended', cb):''
 	
 	going = false
 	
