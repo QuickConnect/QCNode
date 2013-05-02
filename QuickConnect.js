@@ -2,7 +2,7 @@ var Mapper = require('./Mapper'),
 	Stack = require('./Stack').Stack
 
 function QuickConnect(testing, debug) {
-	var mapper, executionMap, debug
+	var mapper, executionMap, debug, fakeQC
 
 	this.WAIT_FOR_DATA = 'wAiT'
 	this.STACK_EXIT = 'ExIt_StAcK'
