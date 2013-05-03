@@ -93,6 +93,7 @@ function QuickConnectStack(id, funcs, data, qc, cb, testing) {
 	    selfDestruct()
 	  } else if (type == "DCF",result === qc.WAIT_FOR_DATA) {
 	    state.waitingCallback = callback
+	    self.emit('waiting', data, state.cfIndex)
 	  } else {
 	    err = new Error("Improper CF return value: " + util.inspect(result))
 	    self.emit('errored', err, data, state.cfIndex)
