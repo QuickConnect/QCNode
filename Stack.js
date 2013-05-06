@@ -144,7 +144,7 @@ function QuickConnectStack(id, funcs, data, qc, cb, testing) {
 	  selfDestruct()
 	}
 	function asyncStackError(error) {
-	  self.emit('errored', error)
+	  self.emit('errored', error, data, state.cfIndex)
     selfDestruct(true)
 	}
 	
