@@ -139,7 +139,7 @@ function QuickConnect(testing, debug) {
 	}
 
 	function checkForStack(stackName){
-		this.mapper.checkForStack(stackName)
+		return this.mapper.checkForStack(stackName)
 	}
 	this.checkForStack = checkForStack
 }
