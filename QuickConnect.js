@@ -139,6 +139,10 @@ function QuickConnect(testing, debug) {
 	  return funcs
 	}
 
+	function checkForStack(stackName){
+		this.mapper.checkForStack(stackName)
+	}
+	this.checkForStack = checkForStack
 }
 exports.QuickConnect = QuickConnect
 exports.sharedQC = new QuickConnect
