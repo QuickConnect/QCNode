@@ -64,12 +64,13 @@ function QuickConnectStack(id, funcs, data, qc, cb, testing) {
 	function newStackObject() {
 	  return {
 	    "asyncStackContinue":asyncStackContinue,
-      "asyncStackExit":asyncStackExit,
-      "asyncStackError":asyncStackError,
-      "WAIT_FOR_DATA":qc.WAIT_FOR_DATA,
-      "STACK_CONTINUE":qc.STACK_CONTINUE,
-      "STACK_EXIT":qc.STACK_EXIT,
-      "handleRequest":qc.handleRequest
+        "asyncStackExit":asyncStackExit,
+        "asyncStackError":asyncStackError,
+        "WAIT_FOR_DATA":qc.WAIT_FOR_DATA,
+        "STACK_CONTINUE":qc.STACK_CONTINUE,
+        "STACK_EXIT":qc.STACK_EXIT,
+        "handleRequest":qc.handleRequest,
+        "checkForStack":qc.checkForStack
 	  }
 	}
 	

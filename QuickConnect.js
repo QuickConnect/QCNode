@@ -36,16 +36,15 @@ function QuickConnect(testing, debug) {
   		WAIT_FOR_DATA : 'wAiT',
   		STACK_EXIT : 'ExIt_StAcK',
   		STACK_CONTINUE : true,
-  		handleRequest: (function () {
-  			return function () {
-  				return handleRequest.apply(self, [].slice.call(arguments,0))
-  			}
-  		})(),
-  		handleRequests: (function () {
-  			return function () {
-  				return handleRequests.apply(self, [].slice.call(arguments,0))
-  			}
-  		})(),
+  		handleRequest: function () {
+			return handleRequest.apply(self, [].slice.call(arguments,0))
+		},
+  		handleRequests: function () {
+			return handleRequests.apply(self, [].slice.call(arguments,0))
+		},
+  		checkForStack: function(){
+  		    return checkForStack.apply(self, [].slice.call(arguments,0))
+  		},
   		debug: self.debug,
   		nextTick: self.nextTick
   	}
@@ -146,3 +145,4 @@ function QuickConnect(testing, debug) {
 }
 exports.QuickConnect = QuickConnect
 exports.sharedQC = new QuickConnect
+
