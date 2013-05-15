@@ -8,7 +8,7 @@ function QuickConnectStack(id, funcs, data, qc, cb, testing) {
 	state = { going: false, cfIndex: -1, waitingCallback: null }
 	
 	this.id = id
-	cb?this.on('ended', cb):''
+	cb?this.on('end', cb):''
 	
 	function go() {
 	  if (state.going) {
@@ -17,7 +17,7 @@ function QuickConnectStack(id, funcs, data, qc, cb, testing) {
 //		console.log('go!')
 		state.going = true
 		
-		self.emit('started', data)
+		self.emit('start', data)
 		dispatch()
 	}
 	this.go = go
@@ -82,7 +82,7 @@ function QuickConnectStack(id, funcs, data, qc, cb, testing) {
 	    obj = newStackObject()
 	    result = func.call(obj, data, obj)
 	  } catch (error) {
-	    self.emit('errored', error, data, state.cfIndex)
+	    self.emit('error', error, data, state.cfIndex)
 	    selfDestruct(true)
 	    return
 	  }
@@ -93,10 +93,11 @@ function QuickConnectStack(id, funcs, data, qc, cb, testing) {
 	    selfDestruct()
 	  } else if (type == "DCF",result === qc.WAIT_FOR_DATA) {
 	    state.waitingCallback = callback
-	    self.emit('waiting', data, state.cfIndex)
+	    self.emit('wait', data, state.cfIndex)
 	  } else {
 	    err = new Error("Improper CF return value: " + util.inspect(result))
-	    self.emit('errored', err, data, state.cfIndex)
+	    self.emit('error', err, data, state.cfIndex)
+	    selfDestruct(true)
 	  }
 	}
 	
@@ -109,7 +110,7 @@ function QuickConnectStack(id, funcs, data, qc, cb, testing) {
 	}
 	
 	function ValCFsDoneCallback() {
-	  self.emit('validated', data, state.cfIndex)
+	  self.emit('validateDone', data, state.cfIndex)
 	  qc.nextTick(dispatch)
 	}
 	function ValCFsDoneTestingCallback() {
@@ -118,7 +119,7 @@ function QuickConnectStack(id, funcs, data, qc, cb, testing) {
 	}
 	
 	function DCFsDoneCallback() {
-	  self.emit('datad', data, state.cfIndex)
+	  self.emit('dataDone', data, state.cfIndex)
 	  qc.nextTick(dispatch)
 	}
 	function DCFsDoneTestingCallback() {
@@ -127,7 +128,7 @@ function QuickConnectStack(id, funcs, data, qc, cb, testing) {
 	}
 	
 	function VCFsDoneCallback() {
-	  self.emit('viewed', data, state.cfIndex)
+	  self.emit('viewDone', data, state.cfIndex)
 	  qc.nextTick(selfDestruct)
 	}
 	function VCFsDoneTestingCallback() {
@@ -144,7 +145,7 @@ function QuickConnectStack(id, funcs, data, qc, cb, testing) {
 	  selfDestruct()
 	}
 	function asyncStackError(error) {
-	  self.emit('errored', error, data, state.cfIndex)
+	  self.emit('error', error, data, state.cfIndex)
     selfDestruct(true)
 	}
 	
@@ -153,20 +154,20 @@ function QuickConnectStack(id, funcs, data, qc, cb, testing) {
 	  DCFs.length = 0
 	  VCFs.length = 0
 	  if (!err) {
-	    self.emit('ended', data, state.cfIndex)
+	    self.emit('end', data, state.cfIndex)
 	  }
 	}
 }
 util.inherits(QuickConnectStack, events.EventEmitter);
 
 /* events emitted by the stack:
-  started
-  ended
-  waiting
-  errored
-  validated
-  datad
-  viewed
+  start
+  end
+  wait
+  error
+  validateDone
+  dataDone
+  viewDone
   CFComplete (if testing)
 */
 
