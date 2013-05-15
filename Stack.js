@@ -139,7 +139,11 @@ function QuickConnectStack(id, funcs, data, qc, cb, testing) {
 	
 	function asyncStackContinue(key, results) {
 	  data[key] = results
+	  if (!state.waitingCallback) {
+	    throw new Error("Cannot async continue when not waiting")
+	  }
 	  qc.nextTick(state.waitingCallback)
+	  delete state.waitingCallback
 	}
 	function asyncStackExit(key, results) {
 	  data[key] = results
