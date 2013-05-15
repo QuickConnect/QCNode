@@ -158,6 +158,7 @@ function QuickConnectStack(id, funcs, data, qc, cb, testing) {
 	  ValCFs.length = 0//probably don't need these in some cases. oh well.
 	  DCFs.length = 0
 	  VCFs.length = 0
+	  delete state.waitingCallback
 	  if (!err) {
 	    self.emit('end', data, state.cfIndex)
 	  }
