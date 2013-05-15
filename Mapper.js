@@ -42,5 +42,11 @@ function QuickConnectMapper() {
 	}
 	this.mapCommandToVCF = mapCommandToVCF
 	
+	function checkForStack(name){
+		var isThere = true
+		isThere = this.viewMap[name] && this.validationMap[name] && this.dataMap[name]
+		return !!isThere
+	}
+	this.checkForStack = checkForStack
 }
 module.exports = QuickConnectMapper
