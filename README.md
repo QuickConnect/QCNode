@@ -7,7 +7,6 @@ The QuickConnect Framework for Node.js
 ```
 npm install qcnode
 ```
-###### note: as of this writting, I haven't actually published the package yet.
 
 ## What is it for?
 
@@ -175,7 +174,7 @@ Here is how it works: When we change to version x.y.z
 * z : we fixed something
 
 ## Contribute
-Because QC has a history older than Node.js, it has some things in it that are leftovers from other incarnations. 'handleRequest' is the oldest part; it comes from living on a server that handles client requests. It has been pointed out that a 'request', a 'command', and a 'stack' are all related, but come from different points in the history. We want to increase the 'y' part of the version by building better ways for peopel to use QC in their codeflow and workflow.
+Because QC has a history older than Node.js, it has some things in it that are leftovers from other incarnations. 'handleRequest' is the oldest part; it comes from living on a server that handles client requests. It has been pointed out that a 'request', a 'command', and a 'stack' are all related, but come from different points in the history. We want to increase the 'y' part of the version by building better ways for people to use QC in their codeflow and workflow.
 
 Fork the repo, submit a pull request, and tell us your rational for the change; we would love to hear all ideas.
 
