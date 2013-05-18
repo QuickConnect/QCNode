@@ -76,42 +76,43 @@ function QuickConnect(testing, debug) {
 		})
 		return stack
 	}
-	
-	function handleRequests(aCommandArray, requestData
-	                    , allStacksCompleteCallback, runParallel/*, runBackground*/) {
-	    
-	    var uuid, i, count, aCmd, stacks = [], oldStack, stack, tail
-	    
-		if (!aCommandArray || aCommandArray.length == 0){
-		  console.warn('WARNING: attempting to execute a request without one or more commands.')
-		}
-		if (!Array.isArray(aCommandArray)) {
-		  aCommandArray = [aCommandArray]
-		}
-		
-		aCommandArray = aCommandArray.slice()
-		
-		for (i = 0, count = aCommandArray.length; i < count; i++) {
-			uuid = genrateUUID()
-			aCmd = aCommandArray[i]
-			funcs = cloneConsumableStacks(aCmd, uuid)
-			if (!funcs) {
-				console.warn('WARNING: attempting to execute the command "'
-				  + (aCommandArray[0] || 'missing')+'" for which no control functions are mapped.')
-				  return
-			}
-			stack = new Stack(uuid, funcs, requestData, fakeQC, callback, testing)
-			if (oldStack && !runParallel) {
-				oldStack.next = stack
-			}
-			stacks.push(stack)
-		}
-		this.nextTick(function () {
-			stacks[0].go()
-		})
-		return stacks
-	}
 	this.handleRequest = handleRequest
+	
+//	function handleRequests(aCommandArray, requestData
+//	                    , allStacksCompleteCallback, runParallel/*, runBackground*/) {
+//	    
+//	    var uuid, i, count, aCmd, stacks = [], oldStack, stack, tail
+//	    
+//		if (!aCommandArray || aCommandArray.length == 0){
+//		  console.warn('WARNING: attempting to execute a request without one or more commands.')
+//		}
+//		if (!Array.isArray(aCommandArray)) {
+//		  aCommandArray = [aCommandArray]
+//		}
+//		
+//		aCommandArray = aCommandArray.slice()
+//		
+//		for (i = 0, count = aCommandArray.length; i < count; i++) {
+//			uuid = genrateUUID()
+//			aCmd = aCommandArray[i]
+//			funcs = cloneConsumableStacks(aCmd, uuid)
+//			if (!funcs) {
+//				console.warn('WARNING: attempting to execute the command "'
+//				  + (aCommandArray[0] || 'missing')+'" for which no control functions are mapped.')
+//				  return
+//			}
+//			stack = new Stack(uuid, funcs, requestData, fakeQC, callback, testing)
+//			if (oldStack && !runParallel) {
+//				oldStack.next = stack
+//			}
+//			stacks.push(stack)
+//		}
+//		this.nextTick(function () {
+//			stacks[0].go()
+//		})
+//		return stacks
+//	}
+//	this.handleRequest = handleRequest
 	
 	function cloneConsumableStacks(aCmd, uuid){
 	
