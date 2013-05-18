@@ -48,5 +48,32 @@ function QuickConnectMapper() {
 		return !!isThere
 	}
 	this.checkForStack = checkForStack
+	
+	function command(command, callback) {
+		var self = this,
+		fakeMapper = {
+			valcf: function () {
+				var funcs = Array.prototype.slice.call(arguments)
+				for (var i = 0, count = funcs.length; i < count; i++) {
+					self.mapCommandToValCF( command, funcs[i] )
+				}
+			},
+			dcf: function () {
+				var funcs = Array.prototype.slice.call(arguments)
+				for (var i = 0, count = funcs.length; i < count; i++) {
+					self.mapCommandToDCF( command, funcs[i] )
+				}
+			},
+			vcf: function () {
+				var funcs = Array.prototype.slice.call(arguments)
+				for (var i = 0, count = funcs.length; i < count; i++) {
+					self.mapCommandToVCF( command, funcs[i] )
+				}
+			}
+		}
+		
+		callback.call(fakeMapper)
+	}
+	this.command = command
 }
 module.exports = QuickConnectMapper

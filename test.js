@@ -24,22 +24,11 @@ stacker.on('started',function (data) {console.log('hey!')})
 stacker.on('CFComplete',function (data, index) {console.log('hey!',index)})
 stacker.on('errored',function (err, data, index) {console.log('hey!',err.stack,index)})
 stacker.on('ended',function (data, index) {console.log('hey!',index,data)})
-//function async(data, UUID){
-//	qc.nextTick(function () {
-//		qc.asyncStackContinue(UUID, 'result', 'world')
-//	})
-//	return qc.WAIT_FOR_DATA
-//}
-//
-//function done(data) {
-//	console.log('hello '+data.result)
-//	return qc.STACK_CONTINUE
-//}
-//
-//qc.mapCommandToDCF('test',async)
-//qc.mapCommandToDCF('test',done)
-//
-//qc.handleRequest('test',{},function (data) {
-//	console.log('data? '+data)
-//})
 
+
+myQC.command('short cut', function () {
+	this.valcf( function (data) {console.log('short cut1'); return true}, function (data) {console.log('short cut2'); return true}, function (data) {console.log('short cut3'); return true}, function (data) {console.log('short cut4'); return true} )
+	this.dcf(function(data) {console.log('short cut dcf'); return true})
+})
+
+myQC.handleRequest('short cut',{}, function (data) {console.log('short cut done!')})
