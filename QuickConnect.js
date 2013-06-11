@@ -61,8 +61,11 @@ function QuickConnect(testing, debug) {
 	  return uuid
 	}
 	
-	function handleRequest(aCmd, requestData, callback/*, runBackground*/) {
-		var stack, uuid, funcs
+	function handleRequest(aCmd, requestData, callbacks/*, runBackground*/) {
+		var stack, uuid, funcs, event
+		if (callbacks.constructor == Object) {
+		    callbacks = { 'end': callbacks }
+		}
 		uuid = genrateUUID()
 		funcs = cloneConsumableStacks(aCmd, uuid)
 		if (!funcs) {
@@ -70,10 +73,11 @@ function QuickConnect(testing, debug) {
 			  + (aCmd || 'missing')+'" for which no control functions are mapped.')
 			  return
 		}
-		stack = new Stack(uuid, funcs, requestData, fakeQC, callback, testing)
-		this.nextTick(function () {
-			stack.go()
-		})
+		stack = new Stack(uuid, funcs, requestData, fakeQC, testing)
+		for (event in callbacks) {
+		    stack.on( event, callbacks[event] )
+		}
+		this.nextTick(stack.go)
 		return stack
 	}
 	this.handleRequest = handleRequest

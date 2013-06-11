@@ -1,14 +1,13 @@
 var events = require('events')
 	util = require('util')
 
-function QuickConnectStack(id, funcs, data, qc, cb, testing) {
+function QuickConnectStack(id, funcs, data, qc, testing) {
 	events.EventEmitter.call(this)
 	
 	var ValCFs, DCFs, VCFs, self = this,
 	state = { going: false, cfIndex: -1, waitingCallback: null }
 	
 	this.id = id
-	cb?this.on('end', cb):''
 	
 	function go() {
 	  if (state.going) {
@@ -91,6 +90,9 @@ function QuickConnectStack(id, funcs, data, qc, cb, testing) {
 	  if (result === qc.STACK_CONTINUE) {
 	    callback()
 	  } else if (result === qc.STACK_EXIT) {
+	    if (type == "ValCF") {
+	        self.emit('validationFail', data, state.cfIndex)
+	    }
 	    selfDestruct()
 	  } else if (type == "DCF",result === qc.WAIT_FOR_DATA) {
 	    state.waitingCallback = callback
@@ -171,6 +173,7 @@ util.inherits(QuickConnectStack, events.EventEmitter);
   end
   wait
   error
+  validationFail
   validateDone
   dataDone
   viewDone
