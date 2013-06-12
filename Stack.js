@@ -69,6 +69,7 @@ function QuickConnectStack(id, funcs, data, qc, testing) {
         "STACK_CONTINUE":qc.STACK_CONTINUE,
         "STACK_EXIT":qc.STACK_EXIT,
         "handleRequest":qc.handleRequest,
+        "run":qc.handleRequest,
         "checkForStack":qc.checkForStack
 	  }
 	}
@@ -91,7 +92,7 @@ function QuickConnectStack(id, funcs, data, qc, testing) {
 	    callback()
 	  } else if (result === qc.STACK_EXIT) {
 	    if (type == "ValCF") {
-	        self.emit('validationFail', data, state.cfIndex)
+	        self.emit('validateFail', data, state.cfIndex)
 	    }
 	    selfDestruct()
 	  } else if (type == "DCF",result === qc.WAIT_FOR_DATA) {
@@ -173,7 +174,7 @@ util.inherits(QuickConnectStack, events.EventEmitter);
   end
   wait
   error
-  validationFail
+  validateFail
   validateDone
   dataDone
   viewDone

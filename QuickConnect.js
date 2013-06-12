@@ -63,15 +63,14 @@ function QuickConnect(testing, debug) {
 	
 	function handleRequest(aCmd, requestData, callbacks/*, runBackground*/) {
 		var stack, uuid, funcs, event
-		if (callbacks.constructor == Object) {
+		if (callbacks && callbacks.constructor != Object) {
 		    callbacks = { 'end': callbacks }
 		}
 		uuid = genrateUUID()
 		funcs = cloneConsumableStacks(aCmd, uuid)
 		if (!funcs) {
-			console.warn('WARNING: attempting to execute the command "'
+			throw new Error('Attempting to execute the command "'
 			  + (aCmd || 'missing')+'" for which no control functions are mapped.')
-			  return
 		}
 		stack = new Stack(uuid, funcs, requestData, fakeQC, testing)
 		for (event in callbacks) {

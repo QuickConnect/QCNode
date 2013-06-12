@@ -2,8 +2,11 @@ var mod = require('./QuickConnect'),
 	myQC = new mod.QuickConnect(true),
 	mapper = myQC.mapper,
 	stacker
-
+try{
 myQC.handleRequest('josh',{})
+} catch (error) {
+  console.log('errored correctly')
+}
 
 mapper.mapCommandToValCF('morgen', function (data) {console.log('one',arguments);return this.STACK_CONTINUE})
 mapper.mapCommandToDCF('morgen', function (data) {
