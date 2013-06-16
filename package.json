@@ -3,11 +3,13 @@
     "homepage": "TODO",
     "name": "qcnode",
     "description": "The QuickConnect Framework for Node.js",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "private": false,
     "dependencies": {},
     "devDependencies": {},
-    "scripts": {},
+    "scripts": {
+        "test":"node tests/test.js"
+    },
     "main": "./QuickConnect.js",
     "repository": {
         "type": "git",
