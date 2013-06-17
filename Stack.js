@@ -105,22 +105,22 @@ function QuickConnectStack(id, funcs, data, qc, testing) {
         if (result === qc.STACK_CONTINUE) {
             callback()
         } else if (result === qc.STACK_EXIT) {
-            if (type == "ValCF") {
-                state.validationFailures.push({
-                    index: state.cfIndex,
-                    data: result
-                })
-                callback()
-            } else {
-                selfDestruct()
-            }
+            selfDestruct()
         } else if (type == "DCF", result === qc.WAIT_FOR_DATA) {
             state.waitingCallback = callback
             self.emit('wait', data, state.cfIndex)
         } else {
-            err = new Error("Improper CF return value: " + util.inspect(result) + " @ " + state.cfIndex)
-            self.emit('error', err, data, state.cfIndex)
-            selfDestruct(true)
+            if (type == "ValCF") {
+                state.validationFailures.push({
+                    index: state.cfIndex,
+                    error: result
+                })
+                callback()
+            } else {
+                err = new Error("Improper CF return value: " + util.inspect(result) + " @ " + state.cfIndex)
+                self.emit('error', err, data, state.cfIndex)
+                selfDestruct(true)
+            }
         }
     }
 
