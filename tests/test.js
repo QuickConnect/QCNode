@@ -27,12 +27,14 @@ test.command("running all the tests", function(){
             var tester = require(resolve(__dirname,'testers',file))
             tester.run('run all tests',{},{
                 end: function(data){
+                    count--
                     console.log('finished tests in '+file)
-                    qc.asyncStackContinue()
+                    count&&qc.asyncStackContinue()
                 },
                 error: function(err, data){
+                    count--
                     console.log('error for tests in '+file+':\n\n'+err.stack)
-                    qc.asyncStackContinue()
+                    count&&qc.asyncStackContinue()
                 }
             })
         }).call(this)

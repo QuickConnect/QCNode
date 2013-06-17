@@ -1,17 +1,21 @@
 var Mapper = require('./Mapper'),
     Stack = require('./Stack').Stack
 
-function QuickConnect(testing, debug) {
+function QuickConnect(ops) {
     var mapper, executionMap, debug, fakeQC
+    
+    if (!ops) {
+        ops = {}
+    }
 
     this.WAIT_FOR_DATA = 'wAiT'
     this.STACK_EXIT = 'ExIt_StAcK'
     this.STACK_CONTINUE = true
 
-    mapper = new Mapper
+    mapper = new Mapper(ops)
     this.mapper = mapper
 
-    debug = debug || console.log
+    debug = ops.debug || console.log
     this.debug = debug
 
     function blah() {
@@ -63,6 +67,11 @@ function QuickConnect(testing, debug) {
 
     function handleRequest(aCmd, requestData, callbacks ) {
         var stack, uuid, funcs, event
+        
+        if (Array.isArray(aCmd)) {
+          aCmd = aCmd.join(this.mapper.isolateDelimiter)
+        }
+        
         if (callbacks && callbacks.constructor != Object) {
             callbacks = {
                 'end': callbacks
@@ -73,7 +82,7 @@ function QuickConnect(testing, debug) {
         if (!funcs) {
             throw new Error('Attempting to execute the command "' + (aCmd || 'missing') + '" for which no control functions are mapped.')
         }
-        stack = new Stack(uuid, funcs, requestData, fakeQC, testing)
+        stack = new Stack(uuid, funcs, requestData, fakeQC, ops.testing)
         for (event in callbacks) {
             stack.on(event, callbacks[event])
         }
@@ -111,6 +120,11 @@ function QuickConnect(testing, debug) {
         this.mapper.command(command, callback)
     }
     this.command = command
+    
+    function isolate(spaces, callback) {
+        this.mapper.isolate(spaces, callback)
+    }
+    this.isolate = isolate
 }
 exports.QuickConnect = QuickConnect
 exports.sharedQC = new QuickConnect
