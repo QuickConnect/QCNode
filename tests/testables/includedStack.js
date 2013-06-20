@@ -15,6 +15,14 @@ other.command('wheeeee!', function(){
     })
 })
 
+other.isolate('iso', function(){
+  this.command('wheeeee!', function(){
+      this.valcf(function(data,qc){
+          assert(data.done)
+          return qc.STACK_CONTINUE
+      })
+  })
+})
 module.exports = basic
 
 basic.command('basic stack to call', function(){
@@ -59,6 +67,7 @@ basic.command('included stack', function(){
     })
     this.dstack('basic stack to call')
     this.dstack('wheeeee!', other)
+    this.dstack(['iso','wheeeee!'], other)
     this.vcf(function(data, qc){
         assert(data.done)
         return qc.WAIT_FOR_DATA
