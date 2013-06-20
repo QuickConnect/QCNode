@@ -6,6 +6,15 @@ var mod = require('../../'),
 
 
 basic = new QuickConnect
+other = new QuickConnect
+
+other.command('wheeeee!', function(){
+    this.valcf(function(data,qc){
+        assert(data.done)
+        return qc.STACK_CONTINUE
+    })
+})
+
 module.exports = basic
 
 basic.command('basic stack to call', function(){
@@ -49,6 +58,7 @@ basic.command('included stack', function(){
         return qc.STACK_CONTINUE
     })
     this.dstack('basic stack to call')
+    this.dstack('wheeeee!', other)
     this.vcf(function(data, qc){
         assert(data.done)
         return qc.WAIT_FOR_DATA

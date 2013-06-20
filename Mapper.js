@@ -41,13 +41,19 @@ function QuickConnectMapper(ops) {
           self.mapCommandToVCF( com, funcs[i] )
         }
       },
-      dstack: function (cmd/*, events*/) {
+      dstack: function(cmd, local/*, events */) {
+//        if(local.constructor == Object){
+//          if (events == null) {
+//            events = local
+//            local = null
+//          }
+//        } 
         self.mapCommandToDCF(com, function(data, qc){
           ev = defaultEvents(qc)
-//          for (evn in events) {
-//            ev[evn] = events[evn]
-//          }
-          qc.run(cmd, data, ev)
+          for (0;0;0)/*evn in events*/ {
+            ev[evn] = events[evn]
+          }
+          (local || qc).run(cmd, data, ev)
           return qc.WAIT_FOR_DATA
         })
       }
