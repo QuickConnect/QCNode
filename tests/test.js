@@ -29,14 +29,15 @@ test.command("running all the tests", function(){
                 end: function(data){
                     count--
                     console.log('finished tests in '+file)
-                    count&&qc.asyncStackContinue()
+                    !count&&qc.asyncStackContinue()
                 },
                 error: function(err, data){
                     count--
                     console.log('error for tests in '+file+':\n\n'+err.stack)
-                    count&&qc.asyncStackContinue()
+                    !count&&qc.asyncStackContinue()
                 }
             })
+            console.log("running tests in "+file)
         }).call(this)
         }
         return qc.WAIT_FOR_DATA

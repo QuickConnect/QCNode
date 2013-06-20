@@ -1,32 +1,56 @@
 function QuickConnectMapper(ops) {
-	this.validationMap = {}
-	this.dataMap = {}
-	this.viewMap = {}
-	this.isolateDelimiter = ops.delimiter || '-'
-	var self = this
-	
-	function newMapper(command, space) {
-	  var com = space?(space + self.isolateDelimiter + command):command
-  	return {
-  	  space: '',
-    	valcf: function () {
-    		var funcs = Array.prototype.slice.call(arguments)
-    		for (var i = 0, count = funcs.length; i < count; i++) {
-    			self.mapCommandToValCF( com, funcs[i] )
-    		}
-    	},
-    	dcf: function () {
-    		var funcs = Array.prototype.slice.call(arguments)
-    		for (var i = 0, count = funcs.length; i < count; i++) {
-    			self.mapCommandToDCF( com, funcs[i] )
-    		}
-    	},
-    	vcf: function () {
-    		var funcs = Array.prototype.slice.call(arguments)
-    		for (var i = 0, count = funcs.length; i < count; i++) {
-    			self.mapCommandToVCF( com, funcs[i] )
-    		}
-    	}
+  this.validationMap = {}
+  this.dataMap = {}
+  this.viewMap = {}
+  this.isolateDelimiter = ops.delimiter || '-'
+  var self = this
+  
+  defaultEvents = function(self){
+    return {
+      end: function(){
+        self.asyncStackContinue()
+      },
+      error: function(err){
+        self.asyncStackError(err)
+      },
+      validateFail: function(fails){
+        self.asyncStackError(new Error(fails))
+      }
+    }
+  }
+  
+  function newMapper(command, space) {
+    var com = space?(space + self.isolateDelimiter + command):command
+    return {
+      space: '',
+      valcf: function () {
+        var funcs = Array.prototype.slice.call(arguments)
+        for (var i = 0, count = funcs.length; i < count; i++) {
+          self.mapCommandToValCF( com, funcs[i] )
+        }
+      },
+      dcf: function () {
+        var funcs = Array.prototype.slice.call(arguments)
+        for (var i = 0, count = funcs.length; i < count; i++) {
+          self.mapCommandToDCF( com, funcs[i] )
+        }
+      },
+      vcf: function () {
+        var funcs = Array.prototype.slice.call(arguments)
+        for (var i = 0, count = funcs.length; i < count; i++) {
+          self.mapCommandToVCF( com, funcs[i] )
+        }
+      },
+      dstack: function (cmd/*, events*/) {
+        self.mapCommandToDCF(com, function(data, qc){
+          ev = defaultEvents(qc)
+//          for (evn in events) {
+//            ev[evn] = events[evn]
+//          }
+          qc.run(cmd, data, ev)
+          return qc.WAIT_FOR_DATA
+        })
+      }
     }
   }
   
@@ -54,64 +78,64 @@ function QuickConnectMapper(ops) {
       }
     }
   }
-	
-	function mapCommandToValCF(aCmd, aValCF) {
-		if(aCmd == null || aValCF == null){
-			return
-		}
-		var funcArray = this.validationMap[aCmd]
-		if(funcArray == null) {
-			funcArray = []
-			this.validationMap[aCmd] = funcArray
-		}
-		funcArray.push(aValCF)
-	}
-	this.mapCommandToValCF = mapCommandToValCF
-	
-	function mapCommandToDCF(aCmd, aDCF) {
-		if(aCmd == null || aDCF == null){
-			return
-		}
-		var funcArray = this.dataMap[aCmd]
-		if(funcArray == null) {
-			funcArray = []
-			this.dataMap[aCmd] = funcArray
-		}
-		funcArray.push(aDCF)
-	}
-	this.mapCommandToDCF = mapCommandToDCF
-	
-	function mapCommandToVCF(aCmd, aVCF) {
-		if(aCmd == null || aVCF == null){
-			return
-		}
-		var funcArray = this.viewMap[aCmd]
-		if(funcArray == null) {
-			funcArray = []
-			this.viewMap[aCmd] = funcArray
-		}
-		funcArray.push(aVCF)
-	}
-	this.mapCommandToVCF = mapCommandToVCF
-	
-	function checkForStack(name){
-		var isThere = true
-		isThere = this.viewMap[name] && this.validationMap[name] && this.dataMap[name]
-		return !!isThere
-	}
-	this.checkForStack = checkForStack
-	
-	function command(command, callback) {
-		fakeMapper = newMapper(command)
-		callback.call(fakeMapper)
-	}
-	this.command = command
-	
-	function isolate(spaces, callback) {
-	  var fakeIsolator = newIsolator(spaces)
-	  
-	  callback.call(fakeIsolator)
-	}
-	this.isolate = isolate
+  
+  function mapCommandToValCF(aCmd, aValCF) {
+    if(aCmd == null || aValCF == null){
+      return
+    }
+    var funcArray = this.validationMap[aCmd]
+    if(funcArray == null) {
+      funcArray = []
+      this.validationMap[aCmd] = funcArray
+    }
+    funcArray.push(aValCF)
+  }
+  this.mapCommandToValCF = mapCommandToValCF
+  
+  function mapCommandToDCF(aCmd, aDCF) {
+    if(aCmd == null || aDCF == null){
+      return
+    }
+    var funcArray = this.dataMap[aCmd]
+    if(funcArray == null) {
+      funcArray = []
+      this.dataMap[aCmd] = funcArray
+    }
+    funcArray.push(aDCF)
+  }
+  this.mapCommandToDCF = mapCommandToDCF
+  
+  function mapCommandToVCF(aCmd, aVCF) {
+    if(aCmd == null || aVCF == null){
+      return
+    }
+    var funcArray = this.viewMap[aCmd]
+    if(funcArray == null) {
+      funcArray = []
+      this.viewMap[aCmd] = funcArray
+    }
+    funcArray.push(aVCF)
+  }
+  this.mapCommandToVCF = mapCommandToVCF
+  
+  function checkForStack(name){
+    var isThere = true
+    isThere = this.viewMap[name] && this.validationMap[name] && this.dataMap[name]
+    return !!isThere
+  }
+  this.checkForStack = checkForStack
+  
+  function command(command, callback) {
+    fakeMapper = newMapper(command)
+    callback.call(fakeMapper)
+  }
+  this.command = command
+  
+  function isolate(spaces, callback) {
+    var fakeIsolator = newIsolator(spaces)
+    
+    callback.call(fakeIsolator)
+  }
+  this.isolate = isolate
 }
 module.exports = QuickConnectMapper
