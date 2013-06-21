@@ -102,7 +102,7 @@ function handleRequest(aCmd, requestData, callbacks ) {
     if (!funcs) {
         throw new Error('Attempting to execute the command "' + (aCmd || 'missing') + '" for which no control functions are mapped.')
     }
-    stack = new Stack(uuid, funcs, requestData, fakeQC(this), this.options.testing)
+    stack = new Stack([uuid, aCmd], funcs, requestData, fakeQC(this), this.options.testing)
     for (event in callbacks) {
         stack.on(event, callbacks[event])
     }

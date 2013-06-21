@@ -12,7 +12,7 @@ function QuickConnectStack(id, funcs, data, qc, testing) {
         validationFailures: []
     }
 
-    this.id = id
+    this.id = id.join('')
 
     function go() {
         if (state.going) {
@@ -117,7 +117,7 @@ function QuickConnectStack(id, funcs, data, qc, testing) {
                 })
                 callback()
             } else {
-                err = new Error("Improper CF return value: " + util.inspect(result) + " @ " + state.cfIndex)
+                err = new Error("Improper CF return value: " + util.inspect(result) + " in '" + id[0] + "' @ " + state.cfIndex)
                 self.emit('error', err, data, state.cfIndex)
                 selfDestruct(true)
             }
