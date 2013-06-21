@@ -3,7 +3,7 @@
     "homepage": "TODO",
     "name": "qcnode",
     "description": "The QuickConnect Framework for Node.js",
-    "version": "1.3.2",
+    "version": "1.3.4",
     "private": false,
     "dependencies": {},
     "devDependencies": {},
