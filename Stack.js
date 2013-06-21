@@ -117,7 +117,7 @@ function QuickConnectStack(id, funcs, data, qc, testing) {
                 })
                 callback()
             } else {
-                err = new Error("Improper CF return value: " + util.inspect(result) + " in '" + id[0] + "' @ " + state.cfIndex)
+                err = new Error("Improper CF return value: " + util.inspect(result) + " in '" + id[1] + "' @ " + state.cfIndex)
                 self.emit('error', err, data, state.cfIndex)
                 selfDestruct(true)
             }
