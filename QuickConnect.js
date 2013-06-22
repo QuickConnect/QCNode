@@ -118,12 +118,12 @@ function checkForStack(stackName) {
 QuickConnect.prototype.checkForStack = checkForStack
 
 function command(command, callback) {
-    this.mapper.command(command, callback)
+    return this.mapper.command(command, callback)
 }
 QuickConnect.prototype.command = command
 
 function isolate(spaces, callback) {
-    this.mapper.isolate(spaces, callback)
+    return this.mapper.isolate(spaces, callback)
 }
 QuickConnect.prototype.isolate = isolate
 

@@ -28,18 +28,21 @@ function QuickConnectMapper(ops) {
         for (var i = 0, count = funcs.length; i < count; i++) {
           self.mapCommandToValCF( com, funcs[i] )
         }
+        return this
       },
       dcf: function () {
         var funcs = Array.prototype.slice.call(arguments)
         for (var i = 0, count = funcs.length; i < count; i++) {
           self.mapCommandToDCF( com, funcs[i] )
         }
+        return this
       },
       vcf: function () {
         var funcs = Array.prototype.slice.call(arguments)
         for (var i = 0, count = funcs.length; i < count; i++) {
           self.mapCommandToVCF( com, funcs[i] )
         }
+        return this
       },
       dstack: function(cmd, local/*, events */) {
 //        if(local.constructor == Object){
@@ -56,6 +59,7 @@ function QuickConnectMapper(ops) {
           (local || qc).run(cmd, data, ev)
           return qc.WAIT_FOR_DATA
         })
+        return this
       }
     }
   }
@@ -65,7 +69,6 @@ function QuickConnectMapper(ops) {
       spaces = [spaces]
     }
 
-    var fakeMapper = newMapper
     return {
       spaces: [],
       isolate: function (innerSpaces, callback) {
@@ -74,13 +77,15 @@ function QuickConnectMapper(ops) {
         }
         innerSpaces = [spaces].concat(innerSpaces)
         
-        self.isolate.call(self, innerSpaces, callback)
+        return self.isolate.call(self, innerSpaces, callback)
       },
       command: function (command, callback) {
         var space = spaces.join( self.isolateDelimiter ),
         fakeMapper = newMapper(command, space)
-        
-        callback.call(fakeMapper)
+        if (callback) {
+            callback.call(fakeMapper)
+        }
+        return fakeMapper
       }
     }
   }
@@ -133,14 +138,19 @@ function QuickConnectMapper(ops) {
   
   function command(command, callback) {
     fakeMapper = newMapper(command)
-    callback.call(fakeMapper)
+    if( callback ){
+        callback.call(fakeMapper)
+    }
+    return fakeMapper
   }
   this.command = command
   
   function isolate(spaces, callback) {
     var fakeIsolator = newIsolator(spaces)
-    
-    callback.call(fakeIsolator)
+    if ( callback ) {
+        callback.call(fakeIsolator)
+    }
+    return fakeIsolator
   }
   this.isolate = isolate
 }
