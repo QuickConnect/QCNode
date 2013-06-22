@@ -22,7 +22,6 @@ function QuickConnectMapper(ops) {
   function newMapper(command, space) {
     var com = space?(space + self.isolateDelimiter + command):command
     return {
-      space: '',
       valcf: function () {
         var funcs = Array.prototype.slice.call(arguments)
         for (var i = 0, count = funcs.length; i < count; i++) {
