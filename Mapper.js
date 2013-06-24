@@ -130,7 +130,7 @@ function QuickConnectMapper(ops) {
   
   function checkForStack(name){
     var isThere = true
-    isThere = this.viewMap[name] && this.validationMap[name] && this.dataMap[name]
+    isThere = this.viewMap[name] || this.validationMap[name] || this.dataMap[name]
     return !!isThere
   }
   this.checkForStack = checkForStack
