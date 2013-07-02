@@ -19,7 +19,15 @@ function QuickConnectMapper(ops) {
     }
   }
   
+  function QCCommandEnvironment() {}
+  
   function newMapper(command, space) {
+    var constr = ops.mixins.command || QCCommandEnvironment
+    constr.prototype = newMapperPrototype(command, space)
+    return new constr()
+  }
+  
+  function newMapperPrototype(command, space) {
     var com = space?(space + self.isolateDelimiter + command):command
     return {
       valcf: function () {
@@ -63,7 +71,15 @@ function QuickConnectMapper(ops) {
     }
   }
   
+  function QCIsolateEnvironment() {}
+  
   function newIsolator(spaces) {
+    var constr = ops.mixins.isolate || QCIsolateEnvironment
+    constr.prototype = newIsolatorPrototype(spaces)
+    return new constr()
+  }
+  
+  function newIsolatorPrototype(spaces) {
     if (!Array.isArray(spaces)) {
       spaces = [spaces]
     }
