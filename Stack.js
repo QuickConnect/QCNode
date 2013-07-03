@@ -76,12 +76,16 @@ function QuickConnectStack(id, funcs, data, qc, ops) {
         dispatchToCF("VCF", func, callback)
     }
 
-    function QCControlEnvironment() {}
+    function QCControlEnvironment(fn) {
+        if (fn) {
+            fn.call(this)
+        }
+    }
     
     function newStackObject() {
-      var constr = ops.mixins.control || QCControlEnvironment
-      constr.prototype = newStackObjectPrototype()
-      return new constr()
+      var constr = ops.mixins.control
+      QCControlEnvironment.prototype = newStackObjectPrototype()
+      return new QCControlEnvironment(constr)
     }
 
     function newStackObjectPrototype() {
