@@ -19,12 +19,16 @@ function QuickConnectMapper(ops) {
     }
   }
   
-  function QCCommandEnvironment() {}
+  function QCCommandEnvironment(fn) {
+    if (fn) {
+      fn.call(this)
+    }
+  }
   
   function newMapper(command, space) {
-    var constr = ops.mixins.command || QCCommandEnvironment
-    constr.prototype = newMapperPrototype(command, space)
-    return new constr()
+    var constr = ops.mixins.command
+    QCCommandEnvironment.prototype = newMapperPrototype(command, space)
+    return new QCCommandEnvironment(constr)
   }
   
   function newMapperPrototype(command, space) {
@@ -71,12 +75,16 @@ function QuickConnectMapper(ops) {
     }
   }
   
-  function QCIsolateEnvironment() {}
+  function QCIsolateEnvironment(fn) {
+    if (fn) {
+      fn.call(this)
+    }
+  }
   
   function newIsolator(spaces) {
-    var constr = ops.mixins.isolate || QCIsolateEnvironment
-    constr.prototype = newIsolatorPrototype(spaces)
-    return new constr()
+    var constr = ops.mixins.isolate
+    QCIsolateEnvironment.prototype = newIsolatorPrototype(spaces)
+    return new QCIsolateEnvironment(constr)
   }
   
   function newIsolatorPrototype(spaces) {
