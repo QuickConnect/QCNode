@@ -2,7 +2,7 @@ var mod = require('../../'),
 	QuickConnect = mod.QuickConnect,
 	assert = require('assert'),
 	fs = require('fs'),
-	basic
+	basic, other
 
 
 basic = new QuickConnect

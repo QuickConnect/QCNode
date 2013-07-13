@@ -1,4 +1,4 @@
-QCNode 1.3.5
+QCNode 1.4.x
 ======
 
 The QuickConnect Framework for Node.js. Flow control, application controller logic, and so much more!
@@ -202,12 +202,15 @@ comTwo = iso.command(otherCom)
 comTwo.ect(...)
 ```
 
+## Could you change "X" to be "y"?
+No, but you can with [mixins!](https://github.com/QuickConnect/QCNode/wiki/Mixin-Guide)
+
 ## So?
 
 So this is awesome! You can use QC in the way that works for you. It's more than just flow control, it's designed to help you get things done faster, higher, and stronger. 
 
 ## But how can I use it in ...?
-Head on over to [our example page!](https://github.com/JoshRagem/QCNode/wiki/examples)
+Head on over to [our example page!](https://github.com/QuickConnect/QCNode/wiki/examples)
 
 ## QC History
 QuickConnect started as a response to some of the problems encountered writing code for Enterprise Java servers. The framework pattern evolved for several years in a hybrid mobile environment (QCHybrid, iOS and Android) which provided tools for rapid prototyping of cross-platform apps. 
@@ -232,6 +235,7 @@ We feel the core logic of QC is pretty set in version 1.0.0, but if you have ide
 
 # Licence
 MIT
+
 Copyright (c) 2013 Joshua Barney, Lee Barney
 
 Permission is hereby granted, free of charge, to any person obtaining a copy

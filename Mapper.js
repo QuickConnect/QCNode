@@ -5,7 +5,7 @@ function QuickConnectMapper(ops) {
   this.isolateDelimiter = ops.delimiter || '-'
   var self = this
   
-  defaultEvents = function(self){
+  function defaultEvents(self){
     return {
       end: function(){
         self.asyncStackContinue()
@@ -93,12 +93,11 @@ function QuickConnectMapper(ops) {
     }
 
     return {
-      spaces: [],
       isolate: function (innerSpaces, callback) {
         if (!Array.isArray(innerSpaces)) {
           innerSpaces = [innerSpaces]
         }
-        innerSpaces = [spaces].concat(innerSpaces)
+        innerSpaces = spaces.concat(innerSpaces)
         
         return self.isolate.call(self, innerSpaces, callback)
       },
@@ -115,7 +114,7 @@ function QuickConnectMapper(ops) {
   
   function mapCommandToValCF(aCmd, aValCF) {
     if(aCmd == null || aValCF == null){
-      return
+      throw new Error("Attempting to map '" + aValCF + "' to '" + aCmd + "'" )
     }
     var funcArray = this.validationMap[aCmd]
     if(funcArray == null) {
@@ -128,7 +127,7 @@ function QuickConnectMapper(ops) {
   
   function mapCommandToDCF(aCmd, aDCF) {
     if(aCmd == null || aDCF == null){
-      return
+      throw new Error("Attempting to map '" + aDCF + "' to '" + aCmd + "'" )
     }
     var funcArray = this.dataMap[aCmd]
     if(funcArray == null) {
@@ -141,7 +140,7 @@ function QuickConnectMapper(ops) {
   
   function mapCommandToVCF(aCmd, aVCF) {
     if(aCmd == null || aVCF == null){
-      return
+      throw new Error("Attempting to map '" + aVCF + "' to '" + aCmd + "'" )
     }
     var funcArray = this.viewMap[aCmd]
     if(funcArray == null) {
@@ -160,7 +159,7 @@ function QuickConnectMapper(ops) {
   this.checkForStack = checkForStack
   
   function command(command, callback) {
-    fakeMapper = newMapper(command)
+    var fakeMapper = newMapper(command)
     if( callback ){
         callback.call(fakeMapper)
     }

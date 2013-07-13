@@ -1,4 +1,4 @@
-var events = require('events')
+var events = require('events'),
 util = require('util')
 
 function QuickConnectStack(id, funcs, data, qc, ops) {
