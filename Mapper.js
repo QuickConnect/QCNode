@@ -15,7 +15,8 @@ function QuickConnectMapper(ops) {
       },
       validateFail: function(fails){
         var err = new Error("dstack Validation Error in " + command)
-        err.stack = JSON.stringify(fails)
+        err.command = command
+        err.stack = fails
         self.asyncStackError(err)
       }
     }
