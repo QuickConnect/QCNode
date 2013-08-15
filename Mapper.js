@@ -5,7 +5,7 @@ function QuickConnectMapper(ops) {
   this.isolateDelimiter = ops.delimiter || '-'
   var self = this
   
-  function defaultEvents(self){
+  function defaultEvents(self, command){
     return {
       end: function(){
         self.asyncStackContinue()
@@ -13,8 +13,10 @@ function QuickConnectMapper(ops) {
       error: function(err){
         self.asyncStackError(err)
       },
-      validateFail: function(fails){
-        self.asyncStackError(new Error(fails))
+      validateFail: function(fails, res, index){
+        var err = new Error("dstack Validation Error in " + command + " @" + index)
+        err.failurs = fails
+        self.asyncStackError(err)
       }
     }
   }
@@ -63,7 +65,7 @@ function QuickConnectMapper(ops) {
 //          }
 //        } 
         self.mapCommandToDCF(com, function(data, qc){
-          ev = defaultEvents(qc)
+          ev = defaultEvents(qc, com)
           for (0;0;0)/*evn in events*/ {
             ev[evn] = events[evn]
           }
