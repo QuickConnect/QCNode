@@ -137,7 +137,7 @@ qc.isolate 'request', ->
 		#more logic
 ```
 
-It's pretty simple to write and read with that shorthand. Here is what is actually happening _in the code:_
+It's pretty simple to write and read with that shorthand. Here is what is actually happening _inside QuickConnect:_
 
 ```javascript
 var delim = qc.mapper.isolateDelimiter
